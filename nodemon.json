@@ -1,0 +1,6 @@
+{
+  "watch": ["frontend"],
+  "ext": ".ts,.js,.html",
+  "ignore": [],
+  "exec": "bun run build.config.js"
+}
