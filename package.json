@@ -1,0 +1,18 @@
+{
+  "name": "bun-frameworkless-ts-spa",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun run build --watch",
+    "server": "bun run --hot index.ts",
+    "test": "bun test",
+    "build": "bun run build.config.js",
+    "build:orig": "bun build ./src/index.ts --outfile ./dist/bundle.js --minify"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
