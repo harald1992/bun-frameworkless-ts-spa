@@ -6,6 +6,7 @@ export const copyPlugin: BunPlugin = {
   async setup(build) {
     console.log("Copying index.html");
     const file = readFileSync("frontend/index.html");
+    // Todo: what if directory is empty, Bun.write does not create directory
     await Bun.write("dist/index.html", file);
   },
 };
