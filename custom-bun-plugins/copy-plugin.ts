@@ -1,13 +1,18 @@
-import { BunPlugin, plugin } from "bun";
-import { readFileSync } from "fs";
+import { BunPlugin, PluginBuilder, plugin } from "bun";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdir } from "fs";
 
 export const copyPlugin: BunPlugin = {
   name: "CUSTOM_COPY_PLUGIN",
-  async setup(build) {
-    console.log("Copying index.html");
+  async setup(build: PluginBuilder) {
+    if (!existsSync("dist")) {
+      // create dist folder so bun.write does not error out when not existing
+      mkdirSync("dist");
+    }
+
     const file = readFileSync("frontend/index.html");
-    // Todo: what if directory is empty, Bun.write does not create directory
     await Bun.write("dist/index.html", file);
+
+    cpSync("frontend/assets", "dist/assets", { recursive: true }); // copy assets folder
   },
 };
 
