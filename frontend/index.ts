@@ -1,5 +1,4 @@
 import { components } from "./src/app.module";
-import fetchUser from "./src/services/githubAPI";
 
 // declare vanillaJS webcomponents
 components;

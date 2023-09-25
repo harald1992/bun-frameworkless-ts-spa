@@ -10,33 +10,47 @@ const ROUTES: Routes = {
   404: {
     title: "404",
     template: "404: Not Found",
-    description: "404 page",
+    description:
+      "This page states that the page that is being navigated to does not exist",
   },
   "/": {
     title: "Home",
     template: "<app-home></app-home>",
-    description: "Home page",
+    description:
+      "This is the landing page containing links to other parts in the website",
   },
   photos: {
     title: "Photos",
     template: "<app-photos></app-photos>",
-    description: "Photos page",
+    description: "This page contains all photos from X",
+  },
+  form: {
+    title: "Formspec",
+    template: "<app-form></form>",
+    description: "This page contains a form for a taxonomy",
   },
 };
 
-export const hashLocationHandler = async () => {
+export const hashLocationHandler = async (event?: HashChangeEvent) => {
   let location = window.location.hash.replace("#", "");
+
   if (location.length === 0) {
-    // if string has 0 characters
-    location = "/";
+    location = "/"; // if string has 0 characters
+  }
+  let route = ROUTES[404];
+
+  for (const page in ROUTES) {
+    if (location.includes(page)) {
+      route = ROUTES[page];
+    }
   }
 
-  const route = ROUTES[location] || ROUTES[404];
+  // const route = ROUTES[location] || ROUTES[404];
 
   document.title = route.title;
+
   const pageDescription = document.querySelector('meta[name="description"]');
   pageDescription?.setAttribute("content", route.description || "");
-  console.log(pageDescription);
 
   const routerOutlet = document.querySelector("router-outlet");
   if (!routerOutlet) {

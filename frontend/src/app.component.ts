@@ -1,5 +1,5 @@
 import { hashLocationHandler } from "./services/hashrouter";
-import { $router } from "./services/router";
+import { $router } from "./archive/router";
 
 const template = /*html*/ `
 <div class="page-wrap">
@@ -17,7 +17,6 @@ export class AppComponent extends HTMLElement {
   constructor() {
     super();
     this.render();
-    $router.init();
 
     hashLocationHandler();
   }

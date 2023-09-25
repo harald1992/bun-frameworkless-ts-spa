@@ -1,7 +1,7 @@
 import { Server } from "bun";
 
-const BASE_PATH = "./dist";
-
+const DIST = "./dist";
+const DATABASE = "./database";
 // const port = process.env.PORT || 3002;
 let server = Server();
 
@@ -10,12 +10,18 @@ function Server(): Server {
     port: 3003,
 
     fetch(req: Request) {
+      // console.log(req.url);
+
       const url = new URL(req.url);
       let file = undefined;
       if (url.pathname === "/" || url.pathname.includes("/#/")) {
         file = Bun.file("dist/index.html");
+      } else if (url.pathname.includes("/api")) {
+        let urlPathName = url.pathname.replace("/api", "");
+        const filePath = DATABASE + urlPathName;
+        file = Bun.file(filePath);
       } else {
-        const filePath = BASE_PATH + new URL(req.url).pathname;
+        const filePath = DIST + url.pathname;
         file = Bun.file(filePath);
       }
       return new Response(file);

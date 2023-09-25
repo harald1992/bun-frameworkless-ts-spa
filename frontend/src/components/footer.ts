@@ -1,4 +1,4 @@
-import { $router } from "../services/router";
+import { $router } from "../archive/router";
 
 const template = /*html*/ `
 <footer>

@@ -1,4 +1,6 @@
 const template = /*html*/ `
+    <a href="#">Home</a>
+
    <h1>Photos</h1>
 `;
 
