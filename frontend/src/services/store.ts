@@ -3,7 +3,7 @@ const store = {
   cart: [],
 };
 
-const $storeProxy = new Proxy(store, {
+export const $storeProxy = new Proxy(store, {
   set(target, property, value) {
     (target as any)[property] = value;
     if (property === "menu") {
@@ -12,5 +12,3 @@ const $storeProxy = new Proxy(store, {
     return true;
   },
 });
-
-export default $storeProxy;

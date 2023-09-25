@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "bun run nodemon",
+    "frontendserver": "bun run frontendserver.ts",
     "start:old": "bun run --hot build.config.js",
     "server": "bun run --hot index.ts",
     "test": "bun test",
@@ -11,6 +12,7 @@
     "build:orig": "bun build ./src/index.ts --outfile ./dist/bundle.js --minify"
   },
   "devDependencies": {
+    "@types/web": "^0.0.115",
     "bun-types": "latest",
     "nodemon": "^3.0.1"
   },
