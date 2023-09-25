@@ -10,19 +10,38 @@ const ROUTES: Route[] = [
 ];
 
 class Router {
+  routerLinkEvent = (event: Event) => {
+    // console.log(event);
+    event.preventDefault();
+    if (!event.target) return;
+    this.navigate((event.target as HTMLElement).getAttribute("href") || "/");
+  };
+
   constructor(private routes: Route[] = ROUTES) {}
 
   init() {
     const location = window.location.pathname;
-    console.log(location);
+    // console.log(window.location.pathname);
 
-    const route = this.routes.find((route: Route) =>
+    const routes = this.routes.filter((route: Route) =>
       location.includes(route.url)
-    ) || { url: "*", component: "404: Not Found" };
-    this.navigate(route.url);
+    );
+    // console.log(routes);
+
+    let route = { url: "*", component: "404: Not Found" };
+
+    if (routes.length === 0) {
+      // do nothing
+    } else if (routes.length === 1) {
+      route = routes[0];
+    } else if (routes.length > 1) {
+    }
+    // this.navigate(route.url);
   }
 
   navigate(url: string, addToHistory = true) {
+    // console.log(url);
+
     const historyRoute = "/#" + url;
 
     if (addToHistory) {
@@ -34,17 +53,22 @@ class Router {
       return;
     }
 
-    const routesToNavigateTo = this.routes.filter(
+    const routeToNavigateTo = this.routes.find(
       (route: Route) => url === route.url
     ) || { url: "*", component: "404: Not Found" };
-    console.log(routesToNavigateTo);
 
-    routerOutlet.innerHTML = routesToNavigateTo[0].component;
+    routerOutlet.innerHTML = routeToNavigateTo.component;
 
-    routerOutlet.querySelectorAll("[router-link]").forEach((item: Element) => {
-      item.addEventListener("click", (e) => {
-        this.navigate(item.getAttribute("router-link") || "/");
-      });
+    setTimeout(() => {
+      this.refreshRouterLinks();
+    }, 100);
+    // this.refreshRouterLinks();
+  }
+
+  refreshRouterLinks() {
+    document.querySelectorAll("[router-link]").forEach((item: Element) => {
+      item.removeEventListener("click", this.routerLinkEvent);
+      item.addEventListener("click", this.routerLinkEvent);
     });
   }
 }

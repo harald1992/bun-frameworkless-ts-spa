@@ -1,4 +1,5 @@
 import { AppComponent } from "./app.component";
+import { FooterComponent } from "./components/footer";
 import { HeaderComponent } from "./components/header";
 import { HomeComponent } from "./pages/home.component";
 import { PhotosComponent } from "./pages/photos.component";
@@ -9,4 +10,5 @@ export const components = [
   HeaderComponent,
   HomeComponent,
   PhotosComponent,
+  FooterComponent,
 ];

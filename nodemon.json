@@ -1,6 +1,6 @@
 {
   "watch": ["frontend"],
-  "ext": ".ts,.js,.html",
+  "ext": ".ts,.js,.html,.css",
   "ignore": [],
-  "exec": "bun run build.config.js && bun run frontendserver.ts"
+  "exec": "bun run build.config.js && bun run index.ts"
 }

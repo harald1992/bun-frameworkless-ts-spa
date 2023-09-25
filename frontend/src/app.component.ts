@@ -1,14 +1,15 @@
+import { hashLocationHandler } from "./services/hashrouter";
 import { $router } from "./services/router";
 
 const template = /*html*/ `
 <div class="page-wrap">
     <app-header></app-header>
+
   <main>
       <router-outlet></router-outlet>
-</main>
-  <footer>
-      Footer
-  </footer>
+  </main>
+
+  <app-footer></app-footer>
 </div>
 `;
 
@@ -17,6 +18,8 @@ export class AppComponent extends HTMLElement {
     super();
     this.render();
     $router.init();
+
+    hashLocationHandler();
   }
 
   connectedCallback() {

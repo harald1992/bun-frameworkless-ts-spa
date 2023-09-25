@@ -2,8 +2,8 @@ import { $router } from "../services/router";
 
 const template = /*html*/ `
 <header>
-    <a router-link="/">Home</a>
-    <a router-link="/photos">Photos</a> 
+    <a href="#">Home</a>
+    <a href="#photos">Photos</a> 
 </header>
 `;
 
@@ -14,12 +14,6 @@ export class HeaderComponent extends HTMLElement {
 
   connectedCallback() {
     this.render();
-
-    this.querySelectorAll("[router-link]").forEach((item: Element) => {
-      item.addEventListener("click", (e) => {
-        $router.navigate(item.getAttribute("router-link") || "/");
-      });
-    });
   }
 
   render() {
@@ -28,4 +22,4 @@ export class HeaderComponent extends HTMLElement {
 }
 
 window.customElements.define("app-header", HeaderComponent);
-export default "<app-header></app-header>";
+// export default "<app-header></app-header>";
