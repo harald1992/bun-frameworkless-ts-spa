@@ -50,7 +50,7 @@ header {
   border-bottom: 1px solid black;
 }
 
-a {
+header a {
   display: inline-block;
   cursor: pointer;
   background-color: #f44336;
@@ -60,7 +60,79 @@ a {
   opacity: 0.9;
 }
 
-a:hover,
+header a:hover,
 a:active {
   opacity: 1;
+}
+
+.horizontal-split {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  align-items: start;
+}
+
+a {
+  display: inline-block;
+  cursor: pointer;
+  color: blue;
+}
+
+.margin-left-8 {
+  margin-left: 8px;
+}
+
+.nav-tree {
+  position: relative;
+  margin-left: 16px;
+}
+
+.nav-tree:after {
+  content: "";
+  border-left: 1px solid #000;
+  height: 100%;
+  top: 2px;
+  position: absolute;
+  left: -8px;
+}
+
+.nav-tree--left {
+  position: relative;
+}
+
+.nav-tree--left:after {
+  content: "";
+  border-bottom: 1px solid #000;
+  width: 8px;
+  top: 50%;
+  position: absolute;
+  left: -8px;
+}
+
+.navigation-button {
+  width: 100%;
+  border: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.navigation-button:hover {
+  background-color: whitesmoke;
+}
+
+.page-abstract-link {
+  width: 100%;
+  border: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  background-color: whitesmoke;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px 16px;
+  color: black;
+}
+
+.page-abstract-link:hover {
+  background-color: lightgrey;
 }

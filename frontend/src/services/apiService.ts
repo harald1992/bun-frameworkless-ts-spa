@@ -6,7 +6,7 @@ export const $apiService = {
   ): Promise<FormSpecData | { error: string }> {
     let response = undefined;
     try {
-      const res = await fetch("./api/formspecs/" + formSpecName + ".json");
+      const res = await fetch("./api/" + formSpecName);
       response = await res.json();
       if (!(response as FormSpecData).formSpec) {
         response = { formSpec: response } as FormSpecData;

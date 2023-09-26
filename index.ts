@@ -1,4 +1,5 @@
 import { Server } from "bun";
+import { handleApiBackend } from "./backend/api-backend";
 
 const DIST = "./dist";
 const DATABASE = "./database";
@@ -7,9 +8,9 @@ let server = Server();
 
 function Server(): Server {
   return Bun.serve({
-    port: 3003,
+    port: 3004,
 
-    fetch(req: Request) {
+    async fetch(req: Request) {
       // console.log(req.url);
 
       const url = new URL(req.url);
@@ -17,9 +18,12 @@ function Server(): Server {
       if (url.pathname === "/" || url.pathname.includes("/#/")) {
         file = Bun.file("dist/index.html");
       } else if (url.pathname.includes("/api")) {
-        let urlPathName = url.pathname.replace("/api", "");
-        const filePath = DATABASE + urlPathName;
-        file = Bun.file(filePath);
+        return await handleApiBackend(req);
+        // let urlPathName = url.pathname.replace("/api", "");
+        // const filePath = DATABASE + urlPathName;
+        // file = Bun.file(filePath);
+
+        // getTranslatedFormSpec(file);
       } else {
         const filePath = DIST + url.pathname;
         file = Bun.file(filePath);

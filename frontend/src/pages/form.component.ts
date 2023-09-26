@@ -3,8 +3,14 @@ import { $apiService } from "../services/apiService";
 
 const template = /*html*/ `
    <h1>Form</h1>
+   
+   <div class="horizontal-split">
+     <div class="d-flex flex-column" id="formspec-navigation">Loading...</div>
+     <div class="form" id="formspec-form">
+     <app-form-section></app-form-section>
 
-   <div class="d-flex flex-column" id="formspec-navigation">Loading...</div>
+     </div>
+  </div>
 `;
 
 export class FormComponent extends HTMLElement {
@@ -26,9 +32,17 @@ export class FormComponent extends HTMLElement {
     this.innerHTML = template;
 
     if (this.formSpec) {
-      this.querySelector("#formspec-navigation")!.innerHTML = JSON.stringify(
-        this.formSpec
+      let navigationStringified = JSON.stringify(
+        this.formSpec.formSpec.navigation
       );
+      navigationStringified = navigationStringified.replaceAll(
+        /['"`]/g,
+        "&quot;"
+      );
+
+      this.querySelector("#formspec-navigation")!.innerHTML = /*html*/ `
+    <app-navigation-abstract data="${navigationStringified}"></app-navigation-abstract>
+`;
     }
   }
 
@@ -39,6 +53,8 @@ export class FormComponent extends HTMLElement {
     this.formSpec = (await $apiService.getFormSpec(
       formspecname
     )) as FormSpecData;
+
+    // console.log(this.formSpec);
   }
 
   getHashParams(): { formspecname: string } {
