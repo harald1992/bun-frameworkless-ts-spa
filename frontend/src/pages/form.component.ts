@@ -1,6 +1,6 @@
 import { FormSpecData } from "../interfaces/form-spec.interface";
 import { $apiService } from "../services/apiService";
-import { $storeProxy } from "../services/store";
+import { $store } from "../services/store";
 import { getHashParams } from "../utils/hash-router-params";
 
 const template = /*html*/ `
@@ -33,9 +33,11 @@ export class FormComponent extends HTMLElement {
   render() {
     this.innerHTML = template;
 
-    if ($storeProxy.formSpec) {
+    if ($store.formSpec) {
+      // console.log($store.formSpec);
+
       let navigationStringified = JSON.stringify(
-        $storeProxy.formSpec.formSpec.navigation
+        $store.formSpec.formSpec.navigation
       );
       navigationStringified = navigationStringified.replaceAll(
         /['"`]/g,
@@ -50,13 +52,13 @@ export class FormComponent extends HTMLElement {
 
   async loadFormSpec() {
     const params = getHashParams();
-    const formspecname = params.formspecname;
+    const formspecname = params.formspecname || "";
 
     const formSpec = (await $apiService.getFormSpec(
       formspecname
     )) as FormSpecData;
 
-    $storeProxy.formSpec = formSpec;
+    $store.formSpec = formSpec;
   }
 }
 

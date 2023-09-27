@@ -1,4 +1,4 @@
-export function getHashParams(): { formspecname: string } {
+export function getHashParams(): { formspecname?: string; pageId?: string } {
   const params = { formspecname: "" };
 
   let hashLocation = window.location.hash.replace("#", "");
@@ -17,6 +17,26 @@ export function getHashParams(): { formspecname: string } {
   for (const pair of keyValuePairs) {
     const [key, value] = pair.split("=");
     (params as any)[key] = decodeURIComponent(value); // Decode URI-encoded values
+  }
+
+  return params;
+}
+
+export function getUrlParameters(url: string) {
+  const params = {};
+  const paramStr = url.split("?")[1];
+
+  if (!paramStr) {
+    return params;
+  }
+
+  const paramPairs = paramStr.split("&");
+  for (const pair of paramPairs) {
+    const [key, value] = pair.split("=");
+    if (key && value) {
+      // Decode URI component to handle special characters
+      (params as any)[decodeURIComponent(key)] = decodeURIComponent(value);
+    }
   }
 
   return params;

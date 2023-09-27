@@ -8,6 +8,7 @@ import { NavigationAbstractComponent } from "./components/navigation-abstract";
 import { PageAbstractComponent } from "./components/page-abstract";
 import { FormSectionComponent } from "./components/form-section";
 import { WebSocketComponent } from "./pages/websocket";
+import { FormTableComponent } from "./components/form-table";
 
 /* Declare all components here so the customelements work */
 export const components = [
@@ -21,4 +22,5 @@ export const components = [
   PageAbstractComponent,
   FormSectionComponent,
   WebSocketComponent,
+  FormTableComponent,
 ];

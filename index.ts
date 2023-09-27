@@ -35,3 +35,4 @@ function Server(): Server {
 console.log(`Listening on ${server.hostname}:${server.port}`);
 
 const ws = websocketServer();
+console.log(`Websocket listening on ${ws.hostname}:${ws.port}`);

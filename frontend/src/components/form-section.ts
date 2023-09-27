@@ -1,10 +1,17 @@
-import { FormSection, PageAbstract } from "../interfaces/form-spec.interface";
-import { $storeProxy } from "../services/store";
-import { getHashParams } from "../utils/hash-router-params";
+import {
+  FormSection,
+  FormSectionControl,
+  PageAbstract,
+  TableControl,
+} from "../interfaces/form-spec.interface";
+import { $store } from "../services/store";
+import { getHashParams, getUrlParameters } from "../utils/hash-router-params";
+import { stringifyAndEscape } from "../utils/stringify-and-escape";
 
-// const template = /*html*/ `
-
-// `;
+const template = /*html*/ `
+<h1 id="form-title"></h1>
+<div id="form-sub-sections"></div>
+`;
 
 export class FormSectionComponent extends HTMLElement {
   formSection: FormSection | undefined;
@@ -27,26 +34,40 @@ export class FormSectionComponent extends HTMLElement {
       // if (match) {
       // const pageId = match[0] || "";
 
-      // this.formSection = $storeProxy.formSpec?.formSpec.formSections.find(
-      //   (formSection: FormSection) => {
-      //     console.log(formSection.id, pageId);
-
-      //     formSection.id.includes(pageId);
-      //   }
-      // );
       // console.log(this.formSection);
-      const params = getHashParams();
-      console.log(params);
+      const params: { formspecname: string; pageId: string } = getUrlParameters(
+        window.location.hash
+      ) as { formspecname: string; pageId: string };
 
+      this.formSection = $store.formSpec?.formSpec.formSections.find(
+        (formSection: FormSection) => formSection.id.includes(params.pageId)
+      );
       this.render();
       // }
     });
   }
 
   render() {
-    this.innerHTML = /*html*/ `
-      ${JSON.stringify(this.formSection)}
+    this.innerHTML = template;
+
+    this.querySelector("#form-title")!.textContent = /*html*/ `
+    ${this.formSection?.name}
     `;
+
+    const formSubSections = this.querySelector("#form-sub-sections");
+
+    this.formSection?.controls.forEach((control: FormSectionControl) => {
+      formSubSections!.innerHTML += /*html*/ `
+    <h2>${control.name || ""}</h2>
+    ${control.controls.map((control: TableControl) => {
+      return `<app-form-table data="${stringifyAndEscape(
+        control.table
+      )}"></app-form-table>`;
+    })}
+    `;
+    });
+
+    console.log(this.formSection?.controls);
   }
 }
 

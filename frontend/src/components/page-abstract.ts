@@ -1,4 +1,5 @@
 import { PageAbstract } from "../interfaces/form-spec.interface";
+import { getUrlParameters } from "../utils/hash-router-params";
 
 const template = /*html*/ `
   <a id="label" class="page-abstract-link nav-tree--left"></a>
@@ -32,12 +33,14 @@ export class PageAbstractComponent extends HTMLElement {
   }
 
   setHref() {
-    console.log(window.location.hash);
-    console.log(this.pageAbstract.pageId);
-
+    // append currentParams with new pageId
+    const currentParams = getUrlParameters(window.location.hash);
+    const newParams = { ...currentParams, pageId: this.pageAbstract.pageId };
+    const searchParams = new URLSearchParams(Object.entries(newParams));
+    const location = window.location.hash.split("?");
     this.querySelector("#label")!.setAttribute(
       "href",
-      window.location.hash + "&pageId=" + this.pageAbstract.pageId
+      location[0] + "?" + searchParams.toString()
     );
   }
 }

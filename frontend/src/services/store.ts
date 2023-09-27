@@ -12,7 +12,7 @@ const store: Store = {
   formSpec: undefined,
 };
 
-export const $storeProxy = new Proxy(store, {
+export const $store = new Proxy(store, {
   set(target, property, value) {
     (target as any)[property] = value;
     if (property === "menu") {
