@@ -7,6 +7,7 @@ import { PhotosComponent } from "./pages/photos.component";
 import { NavigationAbstractComponent } from "./components/navigation-abstract";
 import { PageAbstractComponent } from "./components/page-abstract";
 import { FormSectionComponent } from "./components/form-section";
+import { WebSocketComponent } from "./pages/websocket";
 
 /* Declare all components here so the customelements work */
 export const components = [
@@ -19,4 +20,5 @@ export const components = [
   NavigationAbstractComponent,
   PageAbstractComponent,
   FormSectionComponent,
+  WebSocketComponent,
 ];

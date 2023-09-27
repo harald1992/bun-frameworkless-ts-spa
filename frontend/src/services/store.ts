@@ -1,6 +1,15 @@
-const store = {
+import { FormSpecData } from "../interfaces/form-spec.interface";
+
+interface Store {
+  menu: any;
+  cart: any;
+  formSpec: FormSpecData | undefined;
+}
+
+const store: Store = {
   menu: null,
   cart: [],
+  formSpec: undefined,
 };
 
 export const $storeProxy = new Proxy(store, {

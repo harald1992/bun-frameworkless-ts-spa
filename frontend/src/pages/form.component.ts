@@ -1,5 +1,7 @@
 import { FormSpecData } from "../interfaces/form-spec.interface";
 import { $apiService } from "../services/apiService";
+import { $storeProxy } from "../services/store";
+import { getHashParams } from "../utils/hash-router-params";
 
 const template = /*html*/ `
    <h1>Form</h1>
@@ -14,7 +16,7 @@ const template = /*html*/ `
 `;
 
 export class FormComponent extends HTMLElement {
-  formSpec!: FormSpecData;
+  // formSpec!: FormSpecData;
 
   constructor() {
     super();
@@ -31,9 +33,9 @@ export class FormComponent extends HTMLElement {
   render() {
     this.innerHTML = template;
 
-    if (this.formSpec) {
+    if ($storeProxy.formSpec) {
       let navigationStringified = JSON.stringify(
-        this.formSpec.formSpec.navigation
+        $storeProxy.formSpec.formSpec.navigation
       );
       navigationStringified = navigationStringified.replaceAll(
         /['"`]/g,
@@ -47,36 +49,14 @@ export class FormComponent extends HTMLElement {
   }
 
   async loadFormSpec() {
-    const params = this.getHashParams();
+    const params = getHashParams();
     const formspecname = params.formspecname;
 
-    this.formSpec = (await $apiService.getFormSpec(
+    const formSpec = (await $apiService.getFormSpec(
       formspecname
     )) as FormSpecData;
 
-    // console.log(this.formSpec);
-  }
-
-  getHashParams(): { formspecname: string } {
-    const params = { formspecname: "" };
-
-    let hashLocation = window.location.hash.replace("#", "");
-    const regex = /\?(.*)/;
-    const match = hashLocation.match(regex);
-
-    if (!match) {
-      return params;
-    }
-    const urlParams = match[1];
-    const keyValuePairs = urlParams.split("&");
-
-    // Loop through the key-value pairs and populate the 'params' object
-    for (const pair of keyValuePairs) {
-      const [key, value] = pair.split("=");
-      (params as any)[key] = decodeURIComponent(value); // Decode URI-encoded values
-    }
-
-    return params;
+    $storeProxy.formSpec = formSpec;
   }
 }
 

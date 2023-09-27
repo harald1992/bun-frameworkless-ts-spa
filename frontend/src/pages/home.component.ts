@@ -30,6 +30,7 @@ export const formspecNames = [
   "ontology.kvk-rpt-p-u-p-fiscal-initial-value-fiscal-20191211",
   "ontology.kvk-rpt-s-p-20191211",
   "ontology.kvk-rpt-ti-p-20191211",
+  "voorbeeld_formspec_voor_ons",
 ];
 
 const template = /*html*/ `

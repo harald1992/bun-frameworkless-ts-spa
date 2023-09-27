@@ -11,8 +11,6 @@ const template = /*html*/ `
 
 export class NavigationAbstractComponent extends HTMLElement {
   get navigationAbstract(): NavigationAbstract {
-    console.log(this.getAttribute("data"));
-
     let navigationAbstractStringified =
       this.getAttribute("data") || JSON.stringify("");
 
@@ -31,8 +29,6 @@ export class NavigationAbstractComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log(this.navigationAbstract);
-
     this.#isExpanded = this.navigationAbstract.expanded;
     this.render();
   }

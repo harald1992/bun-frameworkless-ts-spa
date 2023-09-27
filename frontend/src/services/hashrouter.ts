@@ -1,9 +1,11 @@
 interface Routes {
-  [key: string | number]: {
-    title: string;
-    template: string;
-    description?: string;
-  };
+  [key: string | number]: Route;
+}
+
+interface Route {
+  title: string;
+  template: string;
+  description?: string;
 }
 
 const ROUTES: Routes = {
@@ -26,10 +28,17 @@ const ROUTES: Routes = {
   },
   form: {
     title: "Formspec",
-    template: "<app-form></form>",
+    template: "<app-form></app-form>",
     description: "This page contains a form for a taxonomy",
   },
+  websocket: {
+    title: "Web Socket",
+    template: "<app-websocket></app-websocket>",
+    description: "This page contains a websocket",
+  },
 };
+
+let previousRoute: Route = { title: "", template: "", description: "" };
 
 export const hashLocationHandler = async (event?: HashChangeEvent) => {
   let location = window.location.hash.replace("#", "");
@@ -37,7 +46,7 @@ export const hashLocationHandler = async (event?: HashChangeEvent) => {
   if (location.length === 0) {
     location = "/"; // if string has 0 characters
   }
-  let route = ROUTES[404];
+  let route: Route = ROUTES[404];
 
   for (const page in ROUTES) {
     if (location.includes(page)) {
@@ -45,6 +54,10 @@ export const hashLocationHandler = async (event?: HashChangeEvent) => {
     }
   }
 
+  if (previousRoute && previousRoute === route) {
+    // todo: use event.oldURL and event.newURL
+    return;
+  }
   // const route = ROUTES[location] || ROUTES[404];
 
   document.title = route.title;
@@ -57,6 +70,8 @@ export const hashLocationHandler = async (event?: HashChangeEvent) => {
     return;
   }
   routerOutlet.innerHTML = route.template;
+
+  previousRoute = route;
 };
 
 window.addEventListener("hashchange", hashLocationHandler);

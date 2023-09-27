@@ -6,8 +6,7 @@
     "start": "bun run nodemon",
     "server": "bun run --hot index.ts",
     "test": "bun test",
-    "build": "bun run build.config.js",
-    "build:orig": "bun build ./src/index.ts --outfile ./dist/bundle.js --minify"
+    "build": "bun run build.config.js"
   },
   "devDependencies": {
     "@types/web": "^0.0.115",

@@ -39,40 +39,19 @@ async function getTranslatedFormSpec(formSpecName: string): Promise<BunFile> {
   let rawFormSpec = Bun.file(rawFormSpecPath + ".json");
   let text = await rawFormSpec.text();
 
-  // let translationFile = Bun.file(rawFormSpecPath + "-resources-nl.json");
-  // const translationData: TranslationData = await translationFile.json();
-  const translationFile = readFileSync(
-    rawFormSpecPath + "-resources-nl.json",
-    "utf8"
-  );
-  // let translationData: any = translationFile.toJSON();
-
-  let translationData: TranslationData = JSON.parse(translationFile as any);
-
-  // console.log(translationData);
-
+  let translationFile = Bun.file(rawFormSpecPath + "-resources-nl.json");
+  const translationData: TranslationData = await translationFile.json();
   const inputObject = translationData.resources.translation.nl;
-  // const inputObject: { [key: string]: string } = {
-  //   "0009d6251f13e6b4b9c982e068c5d3c9": "Uurtarief",
-  // };
 
   const outputObject: { [key: string]: string } = {};
 
   for (const key in inputObject) {
     if (inputObject.hasOwnProperty(key)) {
       const value = inputObject[key];
-      // const newValue = value.replace(/['"`]/g, "&quot;"); // Removes both single and double quotes
       const newValue = value.replace(/['"`]/g, ""); // Removes both single and double quotes
       outputObject[key] = newValue;
-      // console.log(newValue);
     }
   }
-  // console.log(outputObject);
-
-  Bun.write(
-    "./crap/translation2.json",
-    JSON.stringify(outputObject, null, "\t")
-  );
 
   let count = 0;
   const total = Object.entries(outputObject).length;
@@ -81,18 +60,17 @@ async function getTranslatedFormSpec(formSpecName: string): Promise<BunFile> {
     const value = outputObject[attributename] as string;
     text = text.replaceAll(attributename, value);
     count += 1;
-    console.log(count + " / " + total);
+    // console.log(count + " / " + total);
+    process.stdout.cursorTo(0);
+    process.stdout.clearLine(-1);
+    process.stdout.write(
+      "progress: " + count.toString() + " / " + total.toString() + " "
+    );
   }
 
   await Bun.write(newTranslatedFormSpecPath + ".json", text);
-
-  const translatedFormSpec = Bun.file(newTranslatedFormSpecPath + ".json");
   console.log("done converting");
 
+  const translatedFormSpec = Bun.file(newTranslatedFormSpecPath + ".json");
   return translatedFormSpec;
-  // return rawFormSpec;
-}
-
-function htmlEntityEncode(str: string) {
-  return str.replaceAll(/"/g, "&quot;");
 }

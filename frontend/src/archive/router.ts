@@ -20,7 +20,6 @@ class Router {
 
   init() {
     const location = window.location.pathname;
-    // console.log(window.location.pathname);
 
     const routes = this.routes.filter((route: Route) =>
       location.includes(route.url)

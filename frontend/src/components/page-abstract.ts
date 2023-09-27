@@ -24,10 +24,21 @@ export class PageAbstractComponent extends HTMLElement {
   render() {
     this.innerHTML = template;
     this.setLabel();
+    this.setHref();
   }
 
   setLabel() {
     this.querySelector("#label")!.textContent = this.pageAbstract.label;
+  }
+
+  setHref() {
+    console.log(window.location.hash);
+    console.log(this.pageAbstract.pageId);
+
+    this.querySelector("#label")!.setAttribute(
+      "href",
+      window.location.hash + "&pageId=" + this.pageAbstract.pageId
+    );
   }
 }
 
