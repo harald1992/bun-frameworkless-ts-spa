@@ -10,7 +10,9 @@ import { stringifyAndEscape } from "../utils/stringify-and-escape";
 
 const template = /*html*/ `
 <h1 id="form-title"></h1>
-<div id="form-sub-sections"></div>
+  <div id="form-sub-sections">
+</div>
+
 `;
 
 export class FormSectionComponent extends HTMLElement {
@@ -22,36 +24,34 @@ export class FormSectionComponent extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    window.addEventListener("hashchange", (event: HashChangeEvent) => {
-      // console.log(event.newURL);
-      // console.log(window.location);
-      // Define the regex pattern
-      // const pattern = /[^/]+$/;
+    this.getFormSectionFromUrl();
+    this.render();
 
-      // // Match the pattern against the input string
-      // const match = event.newURL.match(pattern);
-      // console.log(match![0]);
-      // if (match) {
-      // const pageId = match[0] || "";
+    window.addEventListener("hashchange", this.hashChangeEvent);
+  }
 
-      // console.log(this.formSection);
-      const params: { formspecname: string; pageId: string } = getUrlParameters(
-        window.location.hash
-      ) as { formspecname: string; pageId: string };
+  hashChangeEvent = () => {
+    this.getFormSectionFromUrl();
+    this.render();
+  };
 
-      this.formSection = $store.formSpec?.formSpec.formSections.find(
-        (formSection: FormSection) => formSection.id.includes(params.pageId)
-      );
-      this.render();
-      // }
-    });
+  getFormSectionFromUrl() {
+    const params: { formspecname: string; pageId: string } = getUrlParameters(
+      window.location.hash
+    ) as { formspecname: string; pageId: string };
+
+    this.formSection = $store.formSpec?.formSpec.formSections.find(
+      (formSection: FormSection) => formSection.id.includes(params.pageId)
+    );
   }
 
   render() {
     this.innerHTML = template;
 
-    this.querySelector("#form-title")!.textContent = /*html*/ `
-    ${this.formSection?.name}
+    console.log(this.formSection);
+
+    this.querySelector("#form-title")!.innerHTML = /*html*/ `
+    ${this.formSection?.name || ""} 
     `;
 
     const formSubSections = this.querySelector("#form-sub-sections");
@@ -66,6 +66,10 @@ export class FormSectionComponent extends HTMLElement {
     })}
     `;
     });
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener("hashchange", this.hashChangeEvent);
   }
 }
 

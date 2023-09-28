@@ -47,8 +47,15 @@ async function getTranslatedFormSpec(formSpecName: string): Promise<BunFile> {
 
   for (const key in inputObject) {
     if (inputObject.hasOwnProperty(key)) {
-      const value = inputObject[key];
-      const newValue = value.replace(/['"`]/g, ""); // Removes both single and double quotes
+      let value = inputObject[key];
+
+      const regexMatcher = /\\"/g; // Match \"
+      value = value.replaceAll(regexMatcher, "");
+
+      const newLineRegex = /\n/g; // Match newline (\n)
+      value = value.replaceAll(newLineRegex, "");
+
+      const newValue = value.replaceAll(/['"`]/g, ""); // Removes both single and double quotes
       outputObject[key] = newValue;
     }
   }

@@ -9,6 +9,7 @@ import { PageAbstractComponent } from "./components/page-abstract";
 import { FormSectionComponent } from "./components/form-section";
 import { WebSocketComponent } from "./pages/websocket";
 import { FormTableComponent } from "./components/form-table";
+import { LoadingSpinnerComponent } from "./components/loading-spinner";
 
 /* Declare all components here so the customelements work */
 export const components = [
@@ -23,4 +24,5 @@ export const components = [
   FormSectionComponent,
   WebSocketComponent,
   FormTableComponent,
+  LoadingSpinnerComponent,
 ];

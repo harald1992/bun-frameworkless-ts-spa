@@ -4,9 +4,10 @@ import {
 } from "../interfaces/form-spec.interface";
 
 const template = /*html*/ `
-<button id="label" class="navigation-button nav-tree--left"></button>
-
-<div class="d-flex flex-column nav-tree" id="children"></div>
+<ul>
+  <button id="label" class="navigation-button nav-tree--left"></button>
+  <div class="d-flex flex-column nav-tree" id="children"></div>
+</ul>
 `;
 
 export class NavigationAbstractComponent extends HTMLElement {
@@ -35,7 +36,6 @@ export class NavigationAbstractComponent extends HTMLElement {
 
   render() {
     this.innerHTML = template;
-
     this.setLabel();
 
     if (this.#isExpanded) {

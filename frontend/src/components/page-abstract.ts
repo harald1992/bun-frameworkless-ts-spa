@@ -2,7 +2,9 @@ import { PageAbstract } from "../interfaces/form-spec.interface";
 import { getUrlParameters } from "../utils/hash-router-params";
 
 const template = /*html*/ `
-  <a id="label" class="page-abstract-link nav-tree--left"></a>
+  <li>
+      <a id="label" class="page-abstract-link nav-tree--left"></a>
+  </li>
  
 `;
 

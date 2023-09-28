@@ -2,15 +2,15 @@ import { FormSpecData } from "../interfaces/form-spec.interface";
 import { $apiService } from "../services/apiService";
 import { $store } from "../services/store";
 import { getHashParams } from "../utils/hash-router-params";
+import { stringifyAndEscape } from "../utils/stringify-and-escape";
 
 const template = /*html*/ `
    <h1>Form</h1>
    
    <div class="horizontal-split">
-     <div class="d-flex flex-column" id="formspec-navigation">Loading...</div>
+     <div class="d-flex flex-column" id="formspec-navigation"><app-loading-spinner></app-loading-spinner></div>
      <div class="form" id="formspec-form">
      <app-form-section></app-form-section>
-
      </div>
   </div>
 `;
@@ -34,19 +34,21 @@ export class FormComponent extends HTMLElement {
     this.innerHTML = template;
 
     if ($store.formSpec) {
-      // console.log($store.formSpec);
+      console.log($store.formSpec);
 
-      let navigationStringified = JSON.stringify(
+      const navigationStringified = stringifyAndEscape(
         $store.formSpec.formSpec.navigation
-      );
-      navigationStringified = navigationStringified.replaceAll(
-        /['"`]/g,
-        "&quot;"
       );
 
       this.querySelector("#formspec-navigation")!.innerHTML = /*html*/ `
     <app-navigation-abstract data="${navigationStringified}"></app-navigation-abstract>
-`;
+      `;
+
+      setTimeout(() => {
+        (
+          this.querySelector(".page-abstract-link") as HTMLAnchorElement
+        )?.click();
+      });
     }
   }
 

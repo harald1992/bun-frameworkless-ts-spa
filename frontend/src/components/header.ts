@@ -2,15 +2,17 @@ import { $router } from "../archive/router";
 
 const template = /*html*/ `
 <header>
-  <img src="assets/kvk.png" class="logo" alt="">
+  <a href="#">
+    <img src="assets/kvk.png" class="logo" alt="">
+  </a>  
   <div class="buttons">
   <div class="user">
      <img src="assets/user.svg" alt="">
      <p>27381312</p>
     </div>
-    <a href="#">Home</a>
-    <a href="#photos">Photos</a> 
-    <a href="#websocket">Websocket</a> 
+    <a class="nav-link" href="#">Home</a>
+    <a class="nav-link" href="#photos">Photos</a> 
+    <a class="nav-link" href="#websocket">Websocket</a> 
 
   </div> 
   
