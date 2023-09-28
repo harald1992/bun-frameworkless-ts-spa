@@ -24,7 +24,7 @@ export class FormComponent extends HTMLElement {
 
   async connectedCallback() {
     this.render();
-
+    $store.formSpec = undefined;
     await this.loadFormSpec();
 
     this.render();
