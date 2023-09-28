@@ -4,6 +4,7 @@ import {
   Table,
   TableRow,
 } from "../interfaces/form-spec.interface";
+import { stringifyAndEscape } from "../utils/stringify-and-escape";
 
 const template = /*html*/ `
 <table id="form-table"></table>
@@ -12,7 +13,6 @@ const template = /*html*/ `
 export class FormTableComponent extends HTMLElement {
   get table(): Table {
     let dataStringified = this.getAttribute("data") || "";
-
     return JSON.parse(dataStringified);
   }
 
@@ -47,7 +47,9 @@ export class FormTableComponent extends HTMLElement {
 
   cellHTML(value: HeaderOrEmptyCell | FormCell) {
     if (value.cellType === "INPUT") {
-      return `<input type="text">`;
+      return `<app-generic-input data="${stringifyAndEscape(
+        value
+      )}"></app-generic-input>`;
     } else {
       return value.value || "";
     }

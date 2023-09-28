@@ -10,7 +10,7 @@ const server = Server();
 
 function Server(): Server {
   return Bun.serve({
-    port: 3005,
+    port: 3006,
 
     async fetch(req: Request) {
       const url = new URL(req.url);

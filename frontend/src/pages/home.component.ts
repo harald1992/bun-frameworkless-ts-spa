@@ -60,7 +60,7 @@ export class HomeComponent extends HTMLElement {
       links =
         links +
         /*html*/ `
-        <a href="#form?formspecname=${name}"> ${name}</a>
+        <a class="homepage-link" href="#form?formspecname=${name}"> ${name}</a>
       `;
     });
     this.querySelector("#formspec-links")!.innerHTML = links;

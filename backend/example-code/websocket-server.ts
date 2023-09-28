@@ -1,6 +1,6 @@
 export function websocketServer() {
   return Bun.serve({
-    port: 4000, // default is also 3000
+    port: 4001, // default is also 3000
 
     fetch(req, server) {
       if (server.upgrade(req)) {
