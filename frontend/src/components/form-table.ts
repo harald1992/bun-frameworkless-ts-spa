@@ -6,8 +6,7 @@ import {
 } from "../interfaces/form-spec.interface";
 
 const template = /*html*/ `
-<table></table>
-
+<table id="form-table"></table>
 `;
 
 export class FormTableComponent extends HTMLElement {
@@ -28,24 +27,27 @@ export class FormTableComponent extends HTMLElement {
   render() {
     this.innerHTML = template;
 
-    const tableHTML = this.querySelector("table");
+    const tableHTML = this.querySelector("#form-table");
 
-    tableHTML!.innerHTML += this.table.rows.map((row: TableRow) => {
-      return /*html*/ `
-        <tr>${row.cols?.map((value: HeaderOrEmptyCell | FormCell) => {
-          return /*html*/ `
-            <td>${this.cellHTML(value)}</td>
-          `;
-        })}</tr>
+    tableHTML!.innerHTML = this.table.rows
+      .map((row: TableRow) => this.rowHTML(row))
+      .join(""); // join to convert map array into separate items, and empty string as separator so it doesn't generate 10 comma's
+  }
+
+  rowHTML(row: TableRow) {
+    return `
+        <tr>${row.cols
+          ?.map((value: HeaderOrEmptyCell | FormCell) => {
+            return `<td>${this.cellHTML(value)}</td>`;
+          })
+          .join("")}
+        </tr>
       `;
-    });
   }
 
   cellHTML(value: HeaderOrEmptyCell | FormCell) {
     if (value.cellType === "INPUT") {
-      return /*html*/ `
-    <input type="text">
-  `;
+      return `<input type="text">`;
     } else {
       return value.value || "";
     }

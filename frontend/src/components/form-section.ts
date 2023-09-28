@@ -66,8 +66,6 @@ export class FormSectionComponent extends HTMLElement {
     })}
     `;
     });
-
-    console.log(this.formSection?.controls);
   }
 }
 
