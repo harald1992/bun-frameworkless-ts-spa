@@ -55,17 +55,14 @@ export class HomeComponent extends HTMLElement {
   }
 
   loadLinks() {
-    let links = "";
-    formspecNames.forEach((name: string) => {
-      links =
-        links +
-        /*html*/ `
-        <a class="homepage-link" href="#form?formspecname=${name}"> ${name}</a>
-      `;
-    });
-    this.querySelector("#formspec-links")!.innerHTML = links;
+    this.querySelector("#formspec-links")!.innerHTML = formspecNames
+      .map(
+        (name: string) => /*html*/ `
+       <a class="homepage-link" href="#form?formspecname=${name}"> ${name}</a>
+    `
+      )
+      .join("");
   }
 }
 
 window.customElements.define("app-home", HomeComponent);
-// export default "<app-home></app-home>";

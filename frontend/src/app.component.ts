@@ -1,5 +1,5 @@
 import { hashLocationHandler } from "./services/hashrouter";
-import { $router } from "./archive/router";
+import { $router } from "./archive/archive_router";
 
 const template = /*html*/ `
 <div class="page-wrap">

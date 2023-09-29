@@ -1,11 +1,10 @@
 import {
   FormSection,
   FormSectionControl,
-  PageAbstract,
   TableControl,
 } from "../interfaces/form-spec.interface";
 import { $store } from "../services/store";
-import { getHashParams, getUrlParameters } from "../utils/hash-router-params";
+import { getUrlParameters } from "../utils/hash-router-params";
 import { stringifyAndEscape } from "../utils/stringify-and-escape";
 
 const template = /*html*/ `
@@ -47,8 +46,6 @@ export class FormSectionComponent extends HTMLElement {
 
   render() {
     this.innerHTML = template;
-
-    console.log(this.formSection);
 
     this.querySelector("#form-title")!.innerHTML = /*html*/ `
     ${this.formSection?.name || ""} 

@@ -1,7 +1,9 @@
 import {
   HeaderOrEmptyCell,
   FormCell,
+  Facets,
 } from "../../interfaces/form-spec.interface";
+import { validateField } from "../../services/validationService";
 
 export class GenericInputComponent extends HTMLElement {
   get inputField(): FormCell {
@@ -19,11 +21,26 @@ export class GenericInputComponent extends HTMLElement {
 
   connectedCallback() {
     this.render();
+
+    this.querySelector("input, select")?.addEventListener(
+      "change",
+      (event: Event) => {
+        const value = (event.target as any).value;
+
+        let errors = [];
+        let facets = this.inputField.facets as Facets;
+
+        if (facets) {
+          errors = validateField(value, facets);
+          if (errors.length === 0) {
+            // do value
+          }
+        }
+      }
+    );
   }
 
   render() {
-    console.log(this.inputField.inputType);
-
     let html = "";
     switch (this.inputField.inputType) {
       case "TEXT":
@@ -41,7 +58,7 @@ export class GenericInputComponent extends HTMLElement {
       case "CHOICE":
         // html = "choice";
         html = /*html*/ `
-    <select  id="${this.id}">
+    <select id="${this.id}" (change)>
         <option value="">--Selecteer een optie--</option>
         ${this.inputField.choices
           ?.map(
@@ -64,7 +81,6 @@ export class GenericInputComponent extends HTMLElement {
     }
 
     this.innerHTML = html;
-    console.log(html);
   }
 }
 

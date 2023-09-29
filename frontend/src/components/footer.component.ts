@@ -1,5 +1,3 @@
-import { $router } from "../archive/router";
-
 const template = /*html*/ `
 <footer>
    Copyright: Harald
@@ -21,4 +19,3 @@ export class FooterComponent extends HTMLElement {
 }
 
 window.customElements.define("app-footer", FooterComponent);
-// export default "<app-footer></app-footer>";

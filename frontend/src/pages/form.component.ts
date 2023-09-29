@@ -34,8 +34,6 @@ export class FormComponent extends HTMLElement {
     this.innerHTML = template;
 
     if ($store.formSpec) {
-      console.log($store.formSpec);
-
       const navigationStringified = stringifyAndEscape(
         $store.formSpec.formSpec.navigation
       );

@@ -38,8 +38,8 @@ export interface FluffyMember {
 }
 
 export enum MemberType {
-  Explicit = 'explicit',
-  Typed = 'typed',
+  Explicit = "explicit",
+  Typed = "typed",
 }
 
 export interface FormSpec {
@@ -74,20 +74,20 @@ export interface NavigationAbstract {
   label: string;
   expanded: boolean;
   children: (NavigationAbstract | PageAbstract)[];
-  type: 'NAVIGATION_ABSTRACT' | 'PAGE_ABSTRACT';
+  type: "NAVIGATION_ABSTRACT" | "PAGE_ABSTRACT";
 }
 
 /* Link */
 export interface PageAbstract {
   label: string;
-  type: 'NAVIGATION_ABSTRACT' | 'PAGE_ABSTRACT';
+  type: "NAVIGATION_ABSTRACT" | "PAGE_ABSTRACT";
   pageId: string;
 }
 
 export interface FormSection {
   name: string | null; // the header
   id: string; // links to the pageId from the Page_Abstract
-  type: 'FORMSECTION';
+  type: "FORMSECTION";
   controls: FormSectionControl[]; // can have multiple levels
   sectionText?: string;
 }
@@ -101,21 +101,21 @@ export interface FormSectionControl {
 
 /* seems to only be FORMSECTION */
 export enum FormSectionType {
-  Formsection = 'FORMSECTION',
+  Formsection = "FORMSECTION",
 }
 
 export interface TableControl {
   // type: CellTypeEnum;
-  type: 'INPUT';
-  inputType: 'TABLE';
+  type: "INPUT";
+  inputType: "TABLE";
   table: Table;
 }
 
 export interface Table {
   id: string; // bijv urn:kvk:linkrole:document-information
   rows: TableRow[];
-  type: 'INPUT';
-  tableType?: 'TYPED-DIMENSIONS'; // this might be a form that can add new fields when pressing plus button, for example ondertekening van de jaarrekening
+  type: "INPUT";
+  tableType?: "TYPED-DIMENSIONS"; // this might be a form that can add new fields when pressing plus button, for example ondertekening van de jaarrekening
 }
 
 export interface TableRow {
@@ -133,49 +133,37 @@ export interface HeaderOrEmptyCell {
 }
 
 export enum ColInputType {
-  CHOICE = 'CHOICE',
-  DATE = 'DATE',
-  FLOAT = 'FLOAT',
-  GYEAR = 'GYEAR',
-  INTEGER = 'INTEGER',
-  PERCENTAGE = 'PERCENTAGE',
-  TEXT = 'TEXT',
+  CHOICE = "CHOICE",
+  DATE = "DATE",
+  FLOAT = "FLOAT",
+  GYEAR = "GYEAR",
+  INTEGER = "INTEGER",
+  PERCENTAGE = "PERCENTAGE",
+  TEXT = "TEXT",
 }
 
 export enum CellTypeEnum {
-  ASPECT_INPUT_HEADER = 'ASPECT-INPUT-HEADER',
-  FIXED_HEADER = 'FIXED-HEADER',
-  INPUT = 'INPUT',
-  PADDING_CELL = 'PADDING-CELL',
-  PADDING_HEADER = 'PADDING-HEADER',
-  REPEAT_HEADER = 'REPEAT-HEADER',
+  ASPECT_INPUT_HEADER = "ASPECT-INPUT-HEADER",
+  FIXED_HEADER = "FIXED-HEADER",
+  INPUT = "INPUT",
+  PADDING_CELL = "PADDING-CELL",
+  PADDING_HEADER = "PADDING-HEADER",
+  REPEAT_HEADER = "REPEAT-HEADER",
 }
 
 export interface FormCell {
-  cellType: 'INPUT';
+  cellType: "INPUT";
   inputType:
-    | 'TEXT'
-    | 'DATE'
-    | 'INTEGER'
-    | 'FLOAT'
-    | 'CHOICE' // ik denk dropdown button
-    | 'PERCENTAGE'
-    | 'GYEAR';
+    | "TEXT"
+    | "DATE"
+    | "INTEGER"
+    | "FLOAT"
+    | "CHOICE" // ik denk dropdown button
+    | "PERCENTAGE"
+    | "GYEAR";
   aspects: Aspects;
   mandatory: boolean;
-  facets?: {
-    // de veldvalidaties
-    maxLength?: number;
-    minLength?: number;
-    enumeration?: string[]; // bij choices dus dropdown buttons
-    length?: number; // bijv 8 bij registratienummer KVK
-    pattern?: string[]; // regex array, bijv [^@]+@[^@]+ of "[0-9]{1,5}"
-    //   "pattern": ["([1-9][0-9]{7})|([0-9][1-9][0-9]{6})"]
-
-    fractionDigits?: number; // bij float
-    totalDigits?: number; // bij float
-    minInclusive?: string; // met bijv 0,
-  };
+  facets?: Facets;
   choices?: { value: string; label: string }[]; // indien choice dus radio button
 
   dimensions: []; // geen idee wat dit is
@@ -184,6 +172,20 @@ export interface FormCell {
   factID: number; // voor andere alldependentFacts om hieraan te refereren denk ik
   allDependentFacts: number[]; // lijst met alle factID's die betrekking hebben hierop
   formulas?: any; // dit bepaalt validaties in betrekking met andere velden denk ik
+}
+
+export interface Facets {
+  // de veldvalidaties
+  maxLength?: number;
+  minLength?: number;
+  enumeration?: string[]; // bij choices dus dropdown buttons
+  length?: number; // bijv 8 bij registratienummer KVK
+  pattern?: string[]; // regex array, bijv [^@]+@[^@]+ of "[0-9]{1,5}"
+  //   "pattern": ["([1-9][0-9]{7})|([0-9][1-9][0-9]{6})"]
+
+  fractionDigits?: number; // bij float
+  totalDigits?: number; // bij float
+  minInclusive?: string; // met bijv 0,
 }
 
 interface Formula {
